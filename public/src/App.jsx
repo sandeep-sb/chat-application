@@ -1,6 +1,6 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Login, Register, Chat } from "./pages";
+import { Login, Register, Chat, SetAvatar} from "./pages";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -16,13 +16,15 @@ const App = () => {
           path: "/login",
           element: <Login />
         },
+        {
+          path: "/setAvatar",
+          element: <SetAvatar />
+        },
       ]
     }
   ])
   return (
-    <RouterProvider router={router}>
-      
-    </RouterProvider>
+    <RouterProvider router={router} />
   );
 }
 
