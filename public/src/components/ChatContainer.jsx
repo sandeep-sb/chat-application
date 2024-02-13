@@ -20,7 +20,13 @@ function ChatContainer ({currentChat, socketRef}) {
         theme: "light",
     };
 
-    const handleClick = async (e) => {
+    const handleEnterKeyPress = (e) => {
+        if(e.key === "Enter"){
+            handleClick();
+        }
+    }
+
+    const handleClick = async () => {
         if(chatInput === ""){
             toast.error("Enter a text to send", toastOptions)
         }
@@ -111,7 +117,7 @@ function ChatContainer ({currentChat, socketRef}) {
                     placeholder="Enter text..."
                     onChange={(e) => setChatInput(e.target.value)}
                     className="w-[90%] h-12 rounded-md"
-                    // onKeyDown={handleClick}
+                    onKeyDown={handleEnterKeyPress}
                 />
                 <button
                     className="h-12 bg-green-600 rounded-md w-[10%]"
