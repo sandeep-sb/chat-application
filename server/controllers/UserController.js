@@ -66,3 +66,15 @@ module.exports.setAvatar = async (req, res, next) => {
         next(error);
     }
 }
+
+module.exports.getAllUsers = async (req, res, next) => {
+    try {
+        const userID = req.params.id;
+        const users = await User.find({_id: {$ne : userID}}).select([
+            "username", "email", "avatarImage", "_id"
+        ]);
+        return res.json(users);
+    } catch (error) {
+        next(error);
+    }
+}
