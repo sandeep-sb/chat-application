@@ -20,7 +20,7 @@ function ChatContainer ({currentChat, socketRef}) {
         theme: "light",
     };
 
-    const handleClick = async () => {
+    const handleClick = async (e) => {
         if(chatInput === ""){
             toast.error("Enter a text to send", toastOptions)
         }
@@ -57,7 +57,7 @@ function ChatContainer ({currentChat, socketRef}) {
 
     useEffect(()=>{
         scrollRef.current?.scrollIntoView({behaviour: "smooth"})
-    }, [])
+    }, [chats])
 
     useEffect(() => {
         async function getAllMessages() {
@@ -111,6 +111,7 @@ function ChatContainer ({currentChat, socketRef}) {
                     placeholder="Enter text..."
                     onChange={(e) => setChatInput(e.target.value)}
                     className="w-[90%] h-12 rounded-md"
+                    // onKeyDown={handleClick}
                 />
                 <button
                     className="h-12 bg-green-600 rounded-md w-[10%]"
