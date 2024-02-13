@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {ToastContainer, toast} from "react-toastify";
 import axios from "axios";
 import {addMessageRoute, getAllMessagesRoute} from "../utils/APIRoutes"
 
-function ChatContainer ({currentChat}) {
+function ChatContainer ({currentChat, socketRef}) {
     const [chatInput, setChatInput] = useState("");
     const [chats, setChats] = useState([]);
+    const [arrivalMessage, setArrivalMessage] = useState();
+    const scrollRef = useRef();
     
     const toastOptions = {
         position: "top-right",
@@ -24,27 +26,49 @@ function ChatContainer ({currentChat}) {
         }
         else{
             const currentUser = await JSON.parse(localStorage.getItem('chat-app-user'));
-            const data = await axios.post(addMessageRoute, {
+            await axios.post(addMessageRoute, {
                 from: currentUser._id,
                 to: currentChat._id,
                 message: chatInput
             })
+            // sent to server
+            socketRef.current.emit("send-msg", {
+                to: currentChat._id,
+                from: currentUser._id,
+                msg: chatInput
+            })
             setChatInput("");
+            const messages = [...chats];
+            messages.push({fromSelf: true, message: chatInput});
+            setChats(messages);
         }
     }
     useEffect(() => {
-        console.log(currentChat);
+        if(socketRef.current){
+            socketRef.current.on("msg-recieve", (msg) => {
+                setArrivalMessage({fromSelf: false, message: msg});
+            })
+        }
+    }, [])
+
+    useEffect(()=>{
+        arrivalMessage && setChats((prev) => [...prev, arrivalMessage])
+    }, [arrivalMessage])
+
+    useEffect(()=>{
+        scrollRef.current?.scrollIntoView({behaviour: "smooth"})
     }, [])
 
     useEffect(() => {
         async function getAllMessages() {
-            const currentUser = await JSON.parse(localStorage.getItem('chat-app-user'));
-            console.log(currentChat);
-            const response = await axios.post(getAllMessagesRoute, {
-                from: currentUser._id,
-                to: currentChat._id,
-            });
-            setChats(response.data);
+            if(currentChat){
+                const currentUser = await JSON.parse(localStorage.getItem('chat-app-user'));
+                const response = await axios.post(getAllMessagesRoute, {
+                    from: currentUser._id,
+                    to: currentChat._id,
+                });
+                setChats(response.data);
+            }
         }
         getAllMessages();
     }, [currentChat])
@@ -71,6 +95,7 @@ function ChatContainer ({currentChat}) {
                     // justify-start self-start   for message recieved
                     <div 
                         key={index}
+                        ref={scrollRef}
                         id="my-element"
                         className={`text-white m-4 mx-16 flex ${chat.fromSelf ? "justify-end self-end" : "justify-start self-start"} w-[40%]`}
                     >
