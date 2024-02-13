@@ -7,21 +7,19 @@ const App = () => {
     {
       path: "/",
       element: <Chat />,
-      children: [
-        {
-          path: "/register",
-          element: <Register />
-        },
-        {
-          path: "/login",
-          element: <Login />
-        },
-        {
-          path: "/setAvatar",
-          element: <SetAvatar />
-        },
-      ]
-    }
+    },
+    {
+      path: "/register",
+      element: <Register />
+    },
+    {
+      path: "/login",
+      element: <Login />
+    },
+    {
+      path: "/setAvatar",
+      element: <SetAvatar />
+    },
   ])
   return (
     <RouterProvider router={router} />
