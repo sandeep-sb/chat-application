@@ -4,6 +4,7 @@ import {ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import axios from "axios";
 import {registerRoute} from "../utils/APIRoutes";
+import ChatterBox from "../assets/chatterbox.jpeg"
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -67,11 +68,11 @@ const Register = () => {
   }, [])
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="bg-blue-400 mt-24 w-4/12 flex flex-col mx-auto">
-        <div className="mx-auto">
-          <img src="" alt="" />
-          <h1>Snappy</h1>
+    <div className="bg-green-400 w-[100%] h-dvh flex items-center">
+      <form onSubmit={handleSubmit} className="bg-blue-400 w-[50%] flex flex-col mx-auto p-4">
+        <div className="mx-auto flex flex-col items-center text-2xl">
+          <img src={ChatterBox} alt="chatterbox" className="w-32 h-32" />
+          <h1 className="mt-2">Register</h1>
         </div>
         <div className="mx-auto flex flex-col w-8/12">
           <input 
@@ -115,7 +116,7 @@ const Register = () => {
         </span> 
       </form>
       <ToastContainer />
-    </>
+    </div>
   );
 }
 

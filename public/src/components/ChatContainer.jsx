@@ -96,16 +96,23 @@ function ChatContainer ({currentChat, socketRef}) {
             </div>
             {/* chat display */}
             <div className="overflow-auto flex flex-col h-[80%] ">
-                {/* {console.log(chats.message)} */}
+                {console.log(chats)}
+                {chats.length === 0 ? 
+                    <div className="flex flex-col items-center h-[50%] mt-[25%] text-2xl">
+                        <h3>Please send a text to chat</h3>
+                    </div> : null
+                }
                 {chats && chats.map((chat, index) => (
                     // justify-start self-start   for message recieved
                     <div 
                         key={index}
                         ref={scrollRef}
                         id="my-element"
-                        className={`text-white m-4 mx-16 flex ${chat.fromSelf ? "justify-end self-end" : "justify-start self-start"} w-[40%]`}
+                        className={`shadow-xl py-4 px-6 rounded-md m-4 mx-16 
+                            flex ${chat.fromSelf ? "justify-end self-end bg-green-200" : 
+                            "justify-start self-start bg-white"} text-black`}
                     >
-                        <p className="shadow-xl bg-white text-black py-4 px-6 rounded-md">{chat.message}</p>
+                        <p >{chat.message}</p>
                     </div>
                 ))}
             </div>

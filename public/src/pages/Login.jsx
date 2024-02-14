@@ -4,6 +4,7 @@ import {ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import axios from "axios";
 import {loginRoute} from "../utils/APIRoutes";
+import ChatterBox from "../assets/chatterbox.jpeg"
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -40,12 +41,12 @@ const Login = () => {
   }
 
   const handleValidation = () => {
-    if(password === ""){
-      toast.error('Password is required', toastOptions);
-      return false;
-    }
     if(username === ""){
       toast.error('Username is required', toastOptions);
+      return false;
+    }
+    if(password === ""){
+      toast.error('Password is required', toastOptions);
       return false;
     }
     return true;
@@ -58,13 +59,17 @@ const Login = () => {
   }, [])
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="bg-blue-400 mt-24 w-4/12 flex flex-col mx-auto">
+    <div className="w-screen h-screen flex justify-center items-center bg-green-400">
+      <form onSubmit={handleSubmit} className="bg-blue-400 h-[70%] w-[40%] flex flex-col">
         <div className="mx-auto">
-          <img src="" alt="" />
-          <h1>Snappy</h1>
+          <img 
+            src={ChatterBox} 
+            alt="chatterbox" 
+            className="my-5 mt-7"
+          />
         </div>
         <div className="mx-auto flex flex-col w-8/12">
+          <h1 className="self-center text-2xl">Login</h1>
           <input 
             type="text" 
             placeholder="Username" 
@@ -86,7 +91,7 @@ const Login = () => {
         <button 
           className="bg-sky-50 w-24 h-8 rounded-md mx-auto"
           type="submit">
-            Login
+            Sign In
         </button>
         <span className="mx-auto mt-6">Don't have an account? 
           <Link className="text-indigo-600" to="/register">
@@ -95,7 +100,7 @@ const Login = () => {
         </span> 
       </form>
       <ToastContainer />
-    </>
+    </ div>
   );
 }
 

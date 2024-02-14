@@ -54,16 +54,16 @@ const Chat = () => {
 
   return (
     <>
-      <div className="w-screen h-dvh flex flex-col justify-center bg-green-400 gap-4 items-center overflow-hidden">
-        <div className="h-[90%] w-[100%] bg-green-700 grid grid-col-8 ">
-          <div className="bg-blue-400 col-start-1 h-full overflow-auto">
+      <div className="w-screen h-dvh flex bg-red-400 overflow-hidden">
+          <div className="w-[25%] bg-blue-400 col-start-1 h-full 
+            overflow-auto border-r border-black">
             <Contacts  
               contacts={contacts}  
               currentUser={currentUser} 
               chatChange={handleChatChange} 
             />
           </div>
-          <div className="bg-red-400 col-start-2 col-end-8 overflow-auto">
+          <div className="w-[75%] bg-red-400 overflow-auto">
             {isLoading && currentChat === undefined ? 
               <Welcome username={currentUser.username} /> : 
               <ChatContainer 
@@ -72,7 +72,6 @@ const Chat = () => {
               />
             }
           </div>
-        </div>
       </div>
       {/* <Outlet /> */}
     </>
